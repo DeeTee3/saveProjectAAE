@@ -77,9 +77,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Acid, function (sprite, otherSpr
         info.setScore(0)
     }
 })
-sprites.onOverlap(SpriteKind.invinciblefan, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
-})
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     game.showLongText("Your game!", DialogLayout.Top)
 })
@@ -245,7 +242,10 @@ statusbars.onZero(StatusBarKind.Espadonspeed, function (status) {
     speedmouvement += -100
     statusbarespadon.setColor(0, 0)
     statusbarespadon.value = 0
-    sprites.destroy(espadonicone)
+    perso.sayText(":)", 500, false)
+    for (let value of tiles.getTilesByType(assets.tile`myTile7`)) {
+        tiles.setTileAt(value, assets.tile`myTile6`)
+    }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Water, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.fountain, 50)
@@ -256,15 +256,6 @@ sprites.onOverlap(SpriteKind.Food$$, SpriteKind.Enemy, function (sprite, otherSp
 })
 sprites.onOverlap(SpriteKind.Food, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(sprite)
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.invinciblefan, function (sprite, otherSprite) {
-    sprites.destroy(otherSprite)
-    info.changeScoreBy(25)
-    info.setLife(5)
-    _1 = 0
-    _10 = 0
-    _25 = 0
-    info.startCountdown(10)
 })
 info.onScore(100, function () {
     game.gameOver(true)
@@ -325,12 +316,16 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.invincibleturtle, function (spri
     }
 })
 statusbars.onZero(StatusBarKind.Turtletime, function (status) {
+    perso.sayText(";)", 500, false)
     _1 = -1
     _10 = -10
     _25 = -25
     statusbar.setColor(0, 0)
     statusbar.value = 0
     sprites.destroy(turtleicone)
+    for (let value of tiles.getTilesByType(assets.tile`myTile8`)) {
+        tiles.setTileAt(value, assets.tile`myTile6`)
+    }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food$, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
@@ -348,7 +343,7 @@ sprites.onOverlap(SpriteKind.invincibleturtle, SpriteKind.Enemy, function (sprit
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Roc, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
-    scene.cameraShake(4, 50)
+    scene.cameraShake(4, 75)
     info.changeLifeBy(_1)
     info.changeScoreBy(_10)
 })
@@ -719,7 +714,7 @@ forever(function () {
         )
         scalepoison = 0.7
     }
-    if (Math.percentChance(0)) {
+    if (Math.percentChance(99)) {
         poisson = sprites.create(img`
             ......f777777f...........
             .....f777777f............
