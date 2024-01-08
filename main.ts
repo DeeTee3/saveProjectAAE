@@ -16,60 +16,11 @@ namespace StatusBarKind {
     export const Turtletime = StatusBarKind.create()
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Espadon, function (sprite, otherSprite) {
-    sprites.destroy(otherSprite, effects.fountain, 50)
-    speedmouvement += 100
-    info.changeScoreBy(10)
-    statusbarespadon.setColor(6, 0)
-    statusbarespadon.value = 100
-    for (let value of tiles.getTilesByType(assets.tile`myTile7`)) {
-        espadonicone = sprites.create(img`
-            ..........bbbbbbbbbbbbbb.
-            .........bbb11111cccccc1b
-            .........bbb11111666ccc1b
-            .........b11111666666cccb
-            .........b666666666666ccb
-            .........b1111116cc6666cb
-            .........b1111111cc6666cb
-            .........b11111111c1666cb
-            .........b116111111c666cb
-            .........b11661c1111666cb
-            .........b111611c116666cb
-            .........b11666666666611b
-            .........b16666666666111b
-            .........b661111111111bbb
-            .........b611111111111bbb
-            ..........bbbbbbbbbbbbbb.
-            `, SpriteKind.icone)
-        espadonicone.setImage(img`
-            .........................
-            .........................
-            .......bbbbbbbbbbbb......
-            ......bbb1111ccccc1b.....
-            ......bbb111166ccc1b.....
-            ......b111166666cccb.....
-            ......b6666666666ccb.....
-            ......b111111cc666cb.....
-            ......b1111111c666cb.....
-            ......b11611111666cb.....
-            ......b1166c111666cb.....
-            ......b116666666611b.....
-            ......b166666666111b.....
-            ......b6611111111bbb.....
-            ......b6111111111bbb.....
-            .......bbbbbbbbbbbb......
-            `)
-        tiles.placeOnTile(espadonicone, value)
-    }
-})
-sprites.onOverlap(SpriteKind.Food$, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
+	
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food$$, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     info.changeScoreBy(50)
-})
-sprites.onOverlap(SpriteKind.Shark, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Acid, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.fountain, 50)
@@ -77,7 +28,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Acid, function (sprite, otherSpr
         info.setScore(0)
     }
 })
-sprites.onOverlap(SpriteKind.invinciblefan, SpriteKind.Enemy, function (sprite, otherSprite) {
+scene.onOverlapTile(SpriteKind.invincibleturtle, assets.tile`myTile9`, function (sprite, location) {
     sprites.destroy(sprite)
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -97,9 +48,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Shark, function (sprite, otherSp
     } else {
     	
     }
-})
-sprites.onOverlap(SpriteKind.Food_, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (perso.vy == 0) {
@@ -241,38 +189,40 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 function destruction_player (mySprite: Sprite) {
     sprites.destroy(mySprite, effects.fountain, 50)
 }
+scene.onOverlapTile(SpriteKind.Shark, assets.tile`myTile9`, function (sprite, location) {
+    sprites.destroy(sprite)
+})
+scene.onOverlapTile(SpriteKind.Enemy, assets.tile`myTile9`, function (sprite, location) {
+    sprites.destroy(sprite)
+})
 statusbars.onZero(StatusBarKind.Espadonspeed, function (status) {
     speedmouvement += -100
-    statusbarespadon.setColor(0, 0)
-    statusbarespadon.value = 0
-    sprites.destroy(espadonicone)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Water, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.fountain, 50)
     info.changeScoreBy(rendement)
 })
-sprites.onOverlap(SpriteKind.Food$$, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
+info.onCountdownEnd(function () {
+    _1 = -1
+    _10 = -10
+    _25 = -25
 })
-sprites.onOverlap(SpriteKind.Food, SpriteKind.Enemy, function (sprite, otherSprite) {
+scene.onOverlapTile(SpriteKind.Food$$, assets.tile`myTile9`, function (sprite, location) {
     sprites.destroy(sprite)
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.invinciblefan, function (sprite, otherSprite) {
-    sprites.destroy(otherSprite)
-    info.changeScoreBy(25)
-    info.setLife(5)
-    _1 = 0
-    _10 = 0
-    _25 = 0
-    info.startCountdown(10)
 })
 info.onScore(100, function () {
     game.gameOver(true)
 })
-sprites.onOverlap(SpriteKind.Acid, SpriteKind.Enemy, function (sprite, otherSprite) {
+scene.onOverlapTile(SpriteKind.Food, assets.tile`myTile9`, function (sprite, location) {
+    sprites.destroy(sprite)
+})
+scene.onOverlapTile(SpriteKind.Water, assets.tile`myTile9`, function (sprite, location) {
     sprites.destroy(sprite)
 })
 sprites.onOverlap(SpriteKind.Roc, SpriteKind.Enemy, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+})
+scene.onOverlapTile(SpriteKind.Roc, assets.tile`myTile9`, function (sprite, location) {
     sprites.destroy(sprite)
     scene.cameraShake(3, 50)
 })
@@ -282,59 +232,20 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.invincibleturtle, function (spri
     _1 = 0
     _10 = 0
     _25 = 0
-    statusbar.value = 100
-    statusbar.setColor(7, 0)
-    for (let value of tiles.getTilesByType(assets.tile`myTile8`)) {
-        turtleicone = sprites.create(img`
-            . . . . . . . . . . . . . . . . 
-            . b b 1 1 1 1 1 1 1 1 1 1 1 1 . 
-            . b b 1 1 1 1 1 1 1 1 1 1 1 1 . 
-            . 1 1 1 c e e e e e e e c 1 1 . 
-            . 1 1 c e e 6 6 6 6 e e e c 1 . 
-            . 1 1 e e 7 6 7 7 7 e e 7 e 1 . 
-            . 1 1 e 7 7 6 e e e e 7 7 e 1 . 
-            . 1 1 e 7 e 6 6 7 7 7 7 e e 1 . 
-            . 1 1 e 7 7 e 6 6 e 6 6 e e 1 . 
-            . 1 1 e e 7 e 7 6 6 e 6 6 e 1 . 
-            . 1 1 e e e e 7 e 6 e 7 e e 1 . 
-            . 1 1 e e e 6 7 7 6 7 e e e 1 . 
-            . 1 1 1 e e 6 6 6 6 e e e 1 1 . 
-            . 1 1 1 1 e e e e e e e 1 b b . 
-            . 1 1 1 1 1 1 1 1 1 1 1 1 b b . 
-            . . . . . . . . . . . . . . . . 
-            `, SpriteKind.icone)
-        turtleicone.setImage(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . b b b b b b b b b b b b . . 
-            . b b b 1 1 1 1 1 1 1 1 1 1 b . 
-            . b b b c e e e e e e c 1 1 b . 
-            . b 1 c e e 6 6 6 6 e e c 1 b . 
-            . b 1 e e 7 6 7 7 7 e 7 e 1 b . 
-            . b 1 e 7 7 6 e e e 7 7 e 1 b . 
-            . b 1 e 7 7 e 6 6 e 6 e e 1 b . 
-            . b 1 e 7 7 e 6 6 e 6 e e 1 b . 
-            . b 1 e e 7 e 6 6 6 6 6 e 1 b . 
-            . b 1 e e e 6 7 7 6 e e e 1 b . 
-            . b 1 1 e e 6 6 6 6 e e 1 1 b . 
-            . b 1 1 1 e e e e e e 1 b b b . 
-            . b 1 1 1 1 1 1 1 1 1 1 b b b . 
-            . . b b b b b b b b b b b b . . 
-            `)
-        tiles.placeOnTile(turtleicone, value)
-    }
+    info.startCountdown(10)
+})
+scene.onOverlapTile(SpriteKind.Acid, assets.tile`myTile9`, function (sprite, location) {
+    sprites.destroy(sprite)
 })
 statusbars.onZero(StatusBarKind.Turtletime, function (status) {
-    _1 = -1
-    _10 = -10
-    _25 = -25
-    statusbar.setColor(0, 0)
-    statusbar.value = 0
-    sprites.destroy(turtleicone)
+    perso.sayText(";)", 500, false)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food$, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     info.changeScoreBy(25)
+})
+scene.onOverlapTile(SpriteKind.Food_, assets.tile`myTile9`, function (sprite, location) {
+    sprites.destroy(sprite)
 })
 function destruction (mySprite: Sprite) {
     sprites.destroy(mySprite)
@@ -348,14 +259,14 @@ sprites.onOverlap(SpriteKind.invincibleturtle, SpriteKind.Enemy, function (sprit
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Roc, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
-    scene.cameraShake(4, 50)
+    scene.cameraShake(4, 75)
     info.changeLifeBy(_1)
     info.changeScoreBy(_10)
 })
 sprites.onOverlap(SpriteKind.Espadon, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(sprite)
 })
-sprites.onOverlap(SpriteKind.Water, SpriteKind.Enemy, function (sprite, otherSprite) {
+scene.onOverlapTile(SpriteKind.Food$, assets.tile`myTile9`, function (sprite, location) {
     sprites.destroy(sprite)
 })
 let eau: Sprite = null
@@ -363,15 +274,10 @@ let gouttesacid: Sprite = null
 let scalepoison = 0
 let poisson: Sprite = null
 let peirre: Sprite = null
-let turtleicone: Sprite = null
 let rendement = 0
-let espadonicone: Sprite = null
-let statusbar: StatusBarSprite = null
-let statusbarespadon: StatusBarSprite = null
 let _25 = 0
 let _10 = 0
 let _1 = 0
-let blocanti_gouttes: Sprite = null
 let perso: Sprite = null
 perso = sprites.create(img`
     ................
@@ -422,28 +328,6 @@ for (let value of tiles.getTilesByType(assets.tile`myTile1`)) {
     tiles.placeOnTile(perso, value)
     tiles.setTileAt(value, assets.tile`transparency16`)
 }
-for (let value of tiles.getTilesByType(assets.tile`myTile`)) {
-    blocanti_gouttes = sprites.create(img`
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Enemy)
-    tiles.placeOnTile(blocanti_gouttes, value)
-    tiles.setTileAt(value, assets.tile`transparency16`)
-}
 let speed1 = 62
 let speed_spawn1 = 2000
 let speed_spawn2 = 10000
@@ -457,11 +341,11 @@ _1 = -1
 _10 = -10
 _25 = -25
 let scrrenheight = scene.screenHeight()
-statusbarespadon = statusbars.create(50, 4, StatusBarKind.Espadonspeed)
+let statusbarespadon = statusbars.create(50, 4, StatusBarKind.Espadonspeed)
 statusbarespadon.setStatusBarFlag(StatusBarFlag.InvertFillDirection, false)
 statusbarespadon.setColor(0, 0)
 statusbarespadon.value = 0
-statusbar = statusbars.create(50, 4, StatusBarKind.Turtletime)
+let statusbar = statusbars.create(50, 4, StatusBarKind.Turtletime)
 statusbar.setStatusBarFlag(StatusBarFlag.InvertFillDirection, false)
 statusbar.setColor(0, 0)
 statusbar.value = 0
@@ -624,102 +508,7 @@ forever(function () {
     pause(randint(speed_spawn3, speed_spawn4))
 })
 forever(function () {
-    if (Math.percentChance(90)) {
-        poisson = sprites.create(img`
-            ........................................
-            ...............ccccc....................
-            ..............cccc..................6...
-            ............ccccc..................6c...
-            ...........ccccccccccc............6c....
-            ........6cccccccccccccccc........66c....
-            ......66666666666666666ccc......66c.....
-            666666666ff6f66666666666666....666c.....
-            .......66ff66f6666666666666666666c......
-            .........666f6c666666666666666666c......
-            ...........666cc66666666666666666c......
-            ..............ccc666666cc.......66c.....
-            ...............cc.......cc.......6c.....
-            ................cc................6c....
-            ........................................
-            ........................................
-            `, SpriteKind.Espadon)
-        animation.runImageAnimation(
-        poisson,
-        [img`
-            ........................................
-            ...............ccccc....................
-            ..............cccc..................6...
-            ............ccccc..................6c...
-            ...........ccccccccccc............6c....
-            ........6cccccccccccccccc........66c....
-            ......66666666666666666ccc......66c.....
-            666666666ff6f66666666666666....666c.....
-            .......66ff66f6666666666666666666c......
-            .........666f6c666666666666666666c......
-            ...........666cc66666666666666666c......
-            ..............ccc666666cc.......66c.....
-            ...............cc.......cc.......6c.....
-            ................cc................6c....
-            ........................................
-            ........................................
-            `,img`
-            ........................................
-            .............ccccc......................
-            ..............ccc..................6....
-            ............ccccc.................6c....
-            ...........cccccc................6c.....
-            ........6ccccccccccccccc........66c.....
-            ......66666666666666666ccc.....66c......
-            666666666ff6f66666666666666...666c......
-            .......66ff66f666666666666666666c.......
-            .........666f6c66666666666666666c.......
-            ...........666cc6666666666666666c.......
-            ..............ccc666666cc......66c......
-            ...............cc.......cc......6c......
-            ................cc...............6c.....
-            ........................................
-            ........................................
-            `,img`
-            ........................................
-            ...............ccccc....................
-            ..............cccc..................6...
-            ............ccccc..................6c...
-            ...........ccccccccccc............6c....
-            ........6cccccccccccccccc........66c....
-            ......66666666666666666ccc......66c.....
-            666666666ff6f66666666666666....666c.....
-            .......66ff66f6666666666666666666c......
-            .........666f6c666666666666666666c......
-            ...........666cc66666666666666666c......
-            ..............ccccc6666cc.......66c.....
-            ...............cccc.....cc.......6c.....
-            ..................................6c....
-            ........................................
-            ........................................
-            `,img`
-            ........................................
-            .............ccccc......................
-            ..............ccc....................6..
-            ............ccccc...................6c..
-            ...........ccccccccccc.............6c...
-            ........6cccccccccccccccc.........66c...
-            ......66666666666ccccccccc.......66c....
-            666666666ff6f66666666666666.....666c....
-            .......66ff66f66666666666666666666c.....
-            .........666f6c6666666666666666666c.....
-            ...........666cc666666666666666666c.....
-            ..............ccc666666cc........66c....
-            ...............cc.......cc........6c....
-            ................cc.................6c...
-            ........................................
-            ........................................
-            `],
-        250,
-        true
-        )
-        scalepoison = 0.7
-    }
-    if (Math.percentChance(0)) {
+    if (Math.percentChance(99)) {
         poisson = sprites.create(img`
             ......f777777f...........
             .....f777777f............
@@ -1287,14 +1076,7 @@ forever(function () {
     pause(randint(speed_spawn1, speed_spawn2))
 })
 forever(function () {
-    if (statusbar.value > 0) {
-        statusbar.value += -2
-        pause(250)
-    }
-    if (statusbarespadon.value > 0) {
-        statusbarespadon.value += -2
-        pause(250)
-    }
+	
 })
 forever(function () {
     gouttesacid = sprites.create(img`

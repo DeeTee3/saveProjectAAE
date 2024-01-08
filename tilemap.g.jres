@@ -94,18 +94,31 @@
         "tilemapTile": true,
         "displayName": "myTile8"
     },
+    "tile11": {
+        "data": "hwQQABAAAACZmZmZmZmZ6ZmZmZmZmZnpmZmZmZmZmemZmZmZmZmZ6ZmZmZmZmZnpmZmZmZmZmemZmZmZmZmZ6ZmZmZmZmZnpmZmZmZmZmemZmZmZmZmZ6ZmZmZmZmZnpmZmZmZmZmemZmZmZmZmZ6ZmZmZmZmZnpmZmZmZmZmemZmZmZmZmZ6Q==",
+        "mimeType": "image/x-mkcd-f4",
+        "tilemapTile": true,
+        "displayName": "myTile9"
+    },
+    "tile12": {
+        "data": "hwQQABAAAADuzMzMzMzMzOrMzMzMzMzM6szMzMzMzMzqzMzMzMzMzK7MzMzMzMzMrszMzMzMzMyuzMzMzMzMzO7MzMzMzMzM7szMzMzMzMzuzMzMzMzMzO7MzMzMzMzMXszMzMzMzMxezMzMzMzMzO7MzMzMzMzM6szMzMzMzMzuzMzMzMzMzA==",
+        "mimeType": "image/x-mkcd-f4",
+        "tilemapTile": true,
+        "displayName": "myTile10"
+    },
     "level1": {
         "id": "level1",
         "mimeType": "application/mkcd-tilemap",
-        "data": "MTAwYTAwMGYwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAzMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjAwMDAwMDAwMDEwMTAxMDEwMTAxMDEwMTAxMDEwNDA0MDQwNTA0MDQwNDA2MDQwNDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjIyMjIyMjIyMg==",
+        "data": "MTAwYTAwMGYwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAyMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMTAwMDAwMDAwMDYwNjA2MDYwNjA2MDYwNjA2MDYwMzAzMDMwNDAzMDMwMzA1MDMwMzAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjIyMjIyMjIyMg==",
         "tileset": [
             "myTiles.transparency16",
-            "myTiles.tile1",
             "myTiles.tile3",
             "myTiles.tile7",
             "myTiles.tile8",
             "myTiles.tile9",
-            "myTiles.tile10"
+            "myTiles.tile10",
+            "myTiles.tile11",
+            "myTiles.tile12"
         ],
         "displayName": "level1"
     },
