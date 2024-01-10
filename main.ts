@@ -17,10 +17,14 @@ namespace StatusBarKind {
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Espadon, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.fountain, 50)
-    speedmouvement += 100
     info.changeScoreBy(10)
+    speedmouvement += 100
+    music.play(music.melodyPlayable(music.baDing), music.PlaybackMode.InBackground)
     statusbarespadon.setColor(6, 0)
     statusbarespadon.value = 100
+    for (let value of tiles.getTilesByType(assets.tile`myTile16`)) {
+        tiles.setTileAt(value, assets.tile`myTile7`)
+    }
     for (let value of tiles.getTilesByType(assets.tile`myTile7`)) {
         espadonicone = sprites.create(img`
             ..........bbbbbbbbbbbbbb.
@@ -61,15 +65,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Espadon, function (sprite, other
         tiles.placeOnTile(espadonicone, value)
     }
 })
-sprites.onOverlap(SpriteKind.Food$, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
-})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food$$, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     info.changeScoreBy(50)
-})
-sprites.onOverlap(SpriteKind.Shark, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Acid, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.fountain, 50)
@@ -77,8 +75,11 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Acid, function (sprite, otherSpr
         info.setScore(0)
     }
 })
+scene.onOverlapTile(SpriteKind.invincibleturtle, assets.tile`myTile9`, function (sprite, location) {
+    destruction(sprite)
+})
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    game.showLongText("Your game!", DialogLayout.Top)
+    game.showLongText("Tu peux bouger de gauche à droite en bougeant le joystick à gauche et à droite. Si tu veux sauter, t'appuies sur A. Ton objectif est d'avoir 100 points. Tu peux gagner des points de différentes façons. Les gouttes d'eau rapportent 1 point. Plus t'as de vies ,plus les gouttes d'eau rapportent points. Les animaux marins qui bougent sont ceux qui rapportent des points. Le requin fait gagner de la vie, l'espadon te rend plus rapide et la tortue te protège des rochers. Fait attention aux poissons qui ne bougent pas, ils te font perdre des points! Fait attention aux rochers, il te font perdre de la vie et des points! Si tu as en-dessous de 3 vies, tu perdra des points aux fur et à mesure du jeu. Danger!!Gouttes d'acides!les gouttes d'acides te rabattent le score à 0, tu drvras tout recommencer. Maintenant amuse toit bien!!", DialogLayout.Bottom)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food_, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
@@ -94,9 +95,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Shark, function (sprite, otherSp
     } else {
     	
     }
-})
-sprites.onOverlap(SpriteKind.Food_, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (perso.vy == 0) {
@@ -235,37 +233,43 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         perso.vy = -150
     }
 })
-function destruction_player (mySprite: Sprite) {
-    sprites.destroy(mySprite, effects.fountain, 50)
-}
+scene.onOverlapTile(SpriteKind.Shark, assets.tile`myTile9`, function (sprite, location) {
+    destruction(sprite)
+})
+scene.onOverlapTile(SpriteKind.Enemy, assets.tile`myTile9`, function (sprite, location) {
+    destruction(sprite)
+})
 statusbars.onZero(StatusBarKind.Espadonspeed, function (status) {
     speedmouvement += -100
     statusbarespadon.setColor(0, 0)
     statusbarespadon.value = 0
-    perso.sayText(":)", 500, false)
+    sprites.destroy(espadonicone)
     for (let value of tiles.getTilesByType(assets.tile`myTile7`)) {
-        tiles.setTileAt(value, assets.tile`myTile6`)
+        tiles.setTileAt(value, assets.tile`myTile16`)
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Water, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.fountain, 50)
     info.changeScoreBy(rendement)
 })
-sprites.onOverlap(SpriteKind.Food$$, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
+scene.onOverlapTile(SpriteKind.Food$$, assets.tile`myTile9`, function (sprite, location) {
+    destruction(sprite)
 })
-sprites.onOverlap(SpriteKind.Food, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
+scene.onOverlapTile(SpriteKind.Espadon, assets.tile`myTile9`, function (sprite, location) {
+    destruction(sprite)
 })
 info.onScore(100, function () {
     game.gameOver(true)
 })
-sprites.onOverlap(SpriteKind.Acid, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
+scene.onOverlapTile(SpriteKind.Food, assets.tile`myTile9`, function (sprite, location) {
+    destruction(sprite)
 })
-sprites.onOverlap(SpriteKind.Roc, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
+scene.onOverlapTile(SpriteKind.Water, assets.tile`myTile9`, function (sprite, location) {
+    destruction(sprite)
+})
+scene.onOverlapTile(SpriteKind.Roc, assets.tile`myTile9`, function (sprite, location) {
     scene.cameraShake(3, 50)
+    destruction(sprite)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.invincibleturtle, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.fountain, 50)
@@ -273,8 +277,12 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.invincibleturtle, function (spri
     _1 = 0
     _10 = 0
     _25 = 0
+    music.play(music.melodyPlayable(music.pewPew), music.PlaybackMode.InBackground)
     statusbar.value = 100
     statusbar.setColor(7, 0)
+    for (let value of tiles.getTilesByType(assets.tile`myTile10`)) {
+        tiles.setTileAt(value, assets.tile`myTile8`)
+    }
     for (let value of tiles.getTilesByType(assets.tile`myTile8`)) {
         turtleicone = sprites.create(img`
             . . . . . . . . . . . . . . . . 
@@ -315,8 +323,10 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.invincibleturtle, function (spri
         tiles.placeOnTile(turtleicone, value)
     }
 })
+scene.onOverlapTile(SpriteKind.Acid, assets.tile`myTile9`, function (sprite, location) {
+    destruction(sprite)
+})
 statusbars.onZero(StatusBarKind.Turtletime, function (status) {
-    perso.sayText(";)", 500, false)
     _1 = -1
     _10 = -10
     _25 = -25
@@ -324,12 +334,15 @@ statusbars.onZero(StatusBarKind.Turtletime, function (status) {
     statusbar.value = 0
     sprites.destroy(turtleicone)
     for (let value of tiles.getTilesByType(assets.tile`myTile8`)) {
-        tiles.setTileAt(value, assets.tile`myTile6`)
+        tiles.setTileAt(value, assets.tile`myTile10`)
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food$, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     info.changeScoreBy(25)
+})
+scene.onOverlapTile(SpriteKind.Food_, assets.tile`myTile9`, function (sprite, location) {
+    destruction(sprite)
 })
 function destruction (mySprite: Sprite) {
     sprites.destroy(mySprite)
@@ -338,139 +351,161 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
     sprites.destroy(otherSprite)
     info.changeScoreBy(10)
 })
-sprites.onOverlap(SpriteKind.invincibleturtle, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
-})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Roc, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     scene.cameraShake(4, 75)
     info.changeLifeBy(_1)
     info.changeScoreBy(_10)
 })
-sprites.onOverlap(SpriteKind.Espadon, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
+scene.onOverlapTile(SpriteKind.Food$, assets.tile`myTile9`, function (sprite, location) {
+    destruction(sprite)
 })
-sprites.onOverlap(SpriteKind.Water, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
-})
+function start () {
+    perso = sprites.create(img`
+        ................
+        ................
+        ................
+        ................
+        ................
+        ................
+        ................
+        ................
+        ..bbbbbbbbbbbbb.
+        ..bbbbbbbbbbbbb.
+        ..bbbbbbbbbbbbb.
+        ...dbbbbbbbbbd..
+        ...ddbbbbbbbdd..
+        ...22bbbfbbb22..
+        ...22bffffbb22..
+        ...22.fffff.22..
+        ...22.fffff.22..
+        ...222ffffd222..
+        ....22.ddd.22...
+        ....222222222...
+        .....2222222....
+        .....2222222....
+        .....2222222....
+        .....2222222....
+        .....2222222....
+        .....2222222....
+        .....8888888....
+        .....8888888....
+        .....8888888....
+        .....888.888....
+        .....888.888....
+        .....888.888....
+        .....888.888....
+        .....888.888....
+        .....aaa.aaa....
+        `, SpriteKind.Player)
+    speedmouvement = 75
+    controller.moveSprite(perso, speedmouvement, 0)
+    game.setGameOverMessage(true, "YOU GOT YOUR WATER!")
+    scene.setBackgroundColor(9)
+    scene.cameraFollowSprite(perso)
+    tiles.setCurrentTilemap(tilemap`level1`)
+    perso.ay = 350
+    info.setLife(3)
+    for (let value of tiles.getTilesByType(assets.tile`myTile1`)) {
+        tiles.placeOnTile(perso, value)
+        tiles.setTileAt(value, assets.tile`transparency16`)
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile`)) {
+        blocanti_gouttes = sprites.create(img`
+            9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
+            9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
+            9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.Enemy)
+        tiles.placeOnTile(blocanti_gouttes, value)
+        tiles.setTileAt(value, assets.tile`transparency16`)
+    }
+    speed1 = 62
+    speed_spawn1 = 2000
+    speed_spawn2 = 10000
+    speed_spawn3 = 1600
+    speed_spawn4 = 2200
+    speed_spawn5 = 750
+    speed2 = 50
+    speed3 = 70
+    speed4 = 80
+    _1 = -1
+    _10 = -10
+    _25 = -25
+    scrrenheight = scene.screenHeight()
+    statusbarespadon = statusbars.create(50, 4, StatusBarKind.Espadonspeed)
+    statusbarespadon.setStatusBarFlag(StatusBarFlag.InvertFillDirection, false)
+    statusbarespadon.setColor(0, 0)
+    statusbarespadon.value = 0
+    statusbar = statusbars.create(50, 4, StatusBarKind.Turtletime)
+    statusbar.setStatusBarFlag(StatusBarFlag.InvertFillDirection, false)
+    statusbar.setColor(0, 0)
+    statusbar.value = 0
+    statusbarespadon.x = 27
+    statusbarespadon.y = 115
+    statusbar.x = 100
+    statusbar.y = 115
+}
 let eau: Sprite = null
 let gouttesacid: Sprite = null
 let scalepoison = 0
 let poisson: Sprite = null
 let peirre: Sprite = null
+let scrrenheight = 0
+let speed4 = 0
+let speed3 = 0
+let speed2 = 0
+let speed_spawn5 = 0
+let speed_spawn4 = 0
+let speed_spawn3 = 0
+let speed_spawn2 = 0
+let speed_spawn1 = 0
+let speed1 = 0
+let blocanti_gouttes: Sprite = null
 let turtleicone: Sprite = null
-let rendement = 0
-let espadonicone: Sprite = null
 let statusbar: StatusBarSprite = null
-let statusbarespadon: StatusBarSprite = null
-let _25 = 0
 let _10 = 0
 let _1 = 0
-let blocanti_gouttes: Sprite = null
+let rendement = 0
 let perso: Sprite = null
-perso = sprites.create(img`
-    ................
-    ................
-    ................
-    ................
-    ................
-    ................
-    ................
-    ................
-    ..bbbbbbbbbbbbb.
-    ..bbbbbbbbbbbbb.
-    ..bbbbbbbbbbbbb.
-    ...dbbbbbbbbbd..
-    ...ddbbbbbbbdd..
-    ...22bbbfbbb22..
-    ...22bffffbb22..
-    ...22.fffff.22..
-    ...22.fffff.22..
-    ...222ffffd222..
-    ....22.ddd.22...
-    ....222222222...
-    .....2222222....
-    .....2222222....
-    .....2222222....
-    .....2222222....
-    .....2222222....
-    .....2222222....
-    .....8888888....
-    .....8888888....
-    .....8888888....
-    .....888.888....
-    .....888.888....
-    .....888.888....
-    .....888.888....
-    .....888.888....
-    .....aaa.aaa....
-    `, SpriteKind.Player)
-let speedmouvement = 125
-controller.moveSprite(perso, speedmouvement, 0)
-game.setGameOverMessage(true, "YOU GOT YOUR WATER!")
-scene.setBackgroundColor(9)
-scene.cameraFollowSprite(perso)
-tiles.setCurrentTilemap(tilemap`level1`)
-perso.ay = 350
-info.setLife(3)
-for (let value of tiles.getTilesByType(assets.tile`myTile1`)) {
-    tiles.placeOnTile(perso, value)
-    tiles.setTileAt(value, assets.tile`transparency16`)
-}
-for (let value of tiles.getTilesByType(assets.tile`myTile`)) {
-    blocanti_gouttes = sprites.create(img`
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Enemy)
-    tiles.placeOnTile(blocanti_gouttes, value)
-    tiles.setTileAt(value, assets.tile`transparency16`)
-}
-let speed1 = 62
-let speed_spawn1 = 2000
-let speed_spawn2 = 10000
-let speed_spawn3 = 1600
-let speed_spawn4 = 2200
-let speed_spawn5 = 750
-let speed2 = 50
-let speed3 = 70
-let speed4 = 80
-_1 = -1
-_10 = -10
-_25 = -25
-let scrrenheight = scene.screenHeight()
-statusbarespadon = statusbars.create(50, 4, StatusBarKind.Espadonspeed)
-statusbarespadon.setStatusBarFlag(StatusBarFlag.InvertFillDirection, false)
-statusbarespadon.setColor(0, 0)
-statusbarespadon.value = 0
-statusbar = statusbars.create(50, 4, StatusBarKind.Turtletime)
-statusbar.setStatusBarFlag(StatusBarFlag.InvertFillDirection, false)
-statusbar.setColor(0, 0)
-statusbar.value = 0
-statusbarespadon.x = 27
-statusbarespadon.y = 115
-statusbar.x = 100
-statusbar.y = 115
+let _25 = 0
+let espadonicone: Sprite = null
+let statusbarespadon: StatusBarSprite = null
+let speedmouvement = 0
+game.showLongText("Tu peux bouger de gauche à droite en bougeant le joystick à gauche et à droite.", DialogLayout.Bottom)
+game.showLongText("Si tu veux sauter, t'appuies sur A. ", DialogLayout.Bottom)
+game.showLongText("Ton objectif est d'avoir 100 points.", DialogLayout.Bottom)
+game.showLongText("Tu peux gagner des points de différentes façons.", DialogLayout.Bottom)
+game.showLongText("Les gouttes d'eau rapportent 1 point. ", DialogLayout.Bottom)
+game.showLongText("Plus t'as de vies ,plus les gouttes d'eau rapportent points.", DialogLayout.Bottom)
+game.showLongText("Les animaux marins qui bougent sont ceux qui rapportent des points.", DialogLayout.Bottom)
+game.showLongText("Le requin fait gagner de la vie, l'espadon te rend plus rapide et la tortue te protège des rochers", DialogLayout.Bottom)
+game.showLongText("Fait attention aux poissons qui ne bougent pas, ils te font perdre des points!", DialogLayout.Bottom)
+game.showLongText("Fait attention aux rochers, il te font perdre de la vie et des points!", DialogLayout.Bottom)
+game.showLongText("Si tu as en-dessous de 3 vies, tu perdra des points aux fur et à mesure du jeu.", DialogLayout.Bottom)
+game.showLongText("Danger!!Gouttes d'acides!les gouttes d'acides te rabattent le score à 0, tu drvras tout recommencer.", DialogLayout.Bottom)
+game.showLongText("Si jamais tu as besoin des instructions appuies juste sur B.", DialogLayout.Bottom)
+game.splash("Maintenant amuse toit bien!!")
+start()
 game.onUpdateInterval(4000, function () {
     speed_spawn2 += 10
     speed_spawn2 = Math.min(speed_spawn2, 2750)
 })
 game.onUpdateInterval(4000, function () {
     speedmouvement += 2
-    speedmouvement = Math.min(speedmouvement, 300)
+    speedmouvement = Math.min(speedmouvement, 400)
 })
 game.onUpdateInterval(4000, function () {
     speed1 += 2
@@ -619,7 +654,7 @@ forever(function () {
     pause(randint(speed_spawn3, speed_spawn4))
 })
 forever(function () {
-    if (Math.percentChance(90)) {
+    if (Math.percentChance(8)) {
         poisson = sprites.create(img`
             ........................................
             ...............ccccc....................
@@ -714,7 +749,7 @@ forever(function () {
         )
         scalepoison = 0.7
     }
-    if (Math.percentChance(99)) {
+    if (Math.percentChance(8)) {
         poisson = sprites.create(img`
             ......f777777f...........
             .....f777777f............
@@ -874,7 +909,7 @@ forever(function () {
         )
         scalepoison = 0.6
     }
-    if (Math.percentChance(10)) {
+    if (Math.percentChance(8)) {
         poisson = sprites.create(img`
             .............ccfff..............
             ............cc888f..............
@@ -1254,21 +1289,21 @@ forever(function () {
         )
         scalepoison = 0.5
     }
-    if (Math.percentChance(0)) {
+    if (Math.percentChance(87)) {
         poisson = sprites.create(img`
             ...........ffff...............
             ..........feeef...............
             .........feeef................
             ......ffffffffff.......fff....
             ....ffeeeeeeeeeeff....feeef...
-            ...feeeeeeeeeeeeeef...fee7f...
-            ..feeeeee7777777eeef..fe77f...
-            .fe1177f777777777eeef.f77f....
-            fe71177fff777777777eef777f....
-            .f57777feef77777....f.f77f....
-            ..f555feeef5555.......f577f...
-            ...f5f5fff55555.......f557f...
-            ....f5555555555f......f555f...
+            ...feeeeeeeeeeeeeef...fee3f...
+            ..feeeeee3333333eeef..fe33f...
+            .fe1133f333333333eeef.f33f....
+            fe31133fff333333333eef333f....
+            .f73333feef33333....f.f33f....
+            ..f777feeef7777.......f733f...
+            ...f7f7fff77777.......f773f...
+            ....f7777777777f......f777f...
             .....ffffffffff........fff....
             ..............................
             ..............................
